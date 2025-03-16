@@ -8,3 +8,12 @@
     gap: 2rem; /* Espaçamento entre as colunas */
     align-items: flex-start; /* Alinhar os itens no topo */
 }
+
+@media (max-width: 768px) {
+    html {
+        font-size: 87.5%; /* 14px */
+    }
+    .wrapper {
+        grid-template-columns: 1fr; /* Exibir apenas uma coluna */
+    }
+}
