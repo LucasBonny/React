@@ -150,7 +150,7 @@ createRoot(document.getElementById('root')).render(
 ```
 ### 4. CSS Global
 
-O CSS global adiciona um padrão de estilização para toda a aplicação.
+O CSS global adiciona um padrão de estilização para toda a aplicação podendo ser usada em qualquer componente.
 
 ```css
 /* src/styles.css */
@@ -212,9 +212,12 @@ body, input, textarea, button {
 }
 ```
 
+> [!IMPORTANT]
+> Quando se aplica a fonte no body, será necessário passar a fonte em outras tags do HTML, pois não se aplica por padrão como por exemplo o `input`, `textarea` e `button`.
+
 ### 5. Componente Header
 
-O Header é um componente que é reutilizável, o que facilita a manutenção e o desenvolvimento de aplicações.
+O Header é o nosso primeiro componente que será reutilizável, o que facilita a manutenção e o desenvolvimento da aplicação.
 
 ```jsx
 // src/components/Header.jsx
@@ -243,7 +246,7 @@ export function Header() {
     padding: 1.25rem 0;
 }
 
-.header img {
+.header > img {
     height: 3rem;
 }
 ```
@@ -253,7 +256,7 @@ export function Header() {
 
 ### 6. Componente Sidebar
 
-Configurando o **App** para receber o Sidebar
+O Sidebar é o nosso segundo componente que será reutilizável, ele será o menu lateral da página que ficará ao lado do conteúdo principal e para isso iremos configurar o **App** para receber o Sidebar.
 
 ```jsx
 // src/App.jsx
@@ -262,10 +265,8 @@ export function App() {
         <div>
             <Header />
             <div className={styles.wrapper}>
-                <aside> 
-                    <Sidebar /> {/* Sidebar */}
-                </aside>
-                <main>
+                <Sidebar /> {/* Sidebar */}
+                <main> {/* Já a main é o conteúdo principal da página */}
                     <Post /> {/* Post */}
                     <Post /> {/* Post */}
                 </main>
@@ -283,13 +284,14 @@ export function App() {
     padding: 0 1rem; /* Espaçamento horizontal < 70rem */
 
     display: grid; /* Exibir como grid */
+    /*256px = tamanho da sidebar, 1fr = tamanho da main*/
     grid-template-columns: 256px 1fr; /* 1fr = 1 fração do espaço disponível */
     gap: 2rem; /* Espaçamento entre as colunas */
     align-items: flex-start; /* Alinhar os itens no topo */
 }
 ```
 
-Agora iremos criar o **Sidebar**.
+Agora iremos criar o componente **Sidebar**.
 
 ```jsx
 // src/components/Sidebar.jsx
@@ -297,7 +299,7 @@ import styles from './Sidebar.module.css';
 
 export function Sidebar() {
     return (
-        <aside className={styles.sidebar}>
+        <aside className={styles.sidebar}> {/* Normalmente o aside é o menu lateral*/}
             <span></span>
         </aside>
     );
