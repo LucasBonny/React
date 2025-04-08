@@ -8,12 +8,21 @@ import { useState } from 'react';
 export function Post({author, content, publishedAt}) {
     const [comments, setComments] = useState([
         {id: 1, comment: 'Post dahora em!'},
-        {id: 2, comment: 'Post dahora em!'},
+        {id: 2, comment: 'Ficou Massa d+'},
     ]);
 
     
     const date = new Date(publishedAt);
     const published = format(new Date(publishedAt), "dd 'de' MMMM 'às' HH:mm'h'", {locale: ptBR});
+    
+    function deleteComment(commentToDelete) {
+        console.log("comentário: " + commentToDelete);
+        const newListWithoutOne = comments.filter((content) => {
+            return content.comment !== commentToDelete;
+        });
+        setComments(newListWithoutOne);
+    }
+    
     const timeDistance = formatDistanceToNow(
         new Date(publishedAt), { 
             locale: ptBR, 
@@ -43,9 +52,9 @@ export function Post({author, content, publishedAt}) {
                 {content.map(line => {
                     switch (line.type) {
                         case 'paragraph':
-                            return <p>{line.content}</p>;
+                            return <p key={line.content}>{line.content}</p>;
                         case 'link':
-                            return <p><a href='#'>{line.content}</a></p>;
+                            return <p key={line.content}><a href='#'>{line.content}</a></p>;
                         default:
                             return null;
                     }
@@ -65,8 +74,8 @@ export function Post({author, content, publishedAt}) {
             </form>
             
             <div className={styles.commentList}>
-                {comments.map(content => {
-                    return <Comment content={content.comment} />;
+                {comments.map((content, index) => {
+                    return <Comment key={index} content={content.comment} onDeleteComment={deleteComment} />;
                 })}
             </div>
 
